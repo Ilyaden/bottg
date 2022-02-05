@@ -32,7 +32,7 @@ async def cm_start(message : types.Message):
 		await message.reply('Загрузи фото')
 
 
-#Удаляем
+#удаляем элемент по названию
 async def cm_delete(message : types.Message):
 	if message.from_user.id == ID:
 		await FSMAdmin1.message_text.set()
@@ -67,7 +67,7 @@ async def load_name(message : types.Message, state:FSMContext):
 		async with state.proxy() as data:
 			data['name'] = message.text
 		await FSMAdmin.next()
-		await message.reply('Введи описание')
+		await message.reply('Введи количество')
 
 
 #ловим третий ответ
@@ -97,6 +97,14 @@ async def delete_item(message : types.Message, state:FSMContext):
 		await state.finish()
 		await message.reply('Успешно')
 
+#посмотреть меню
+async def pizza_menu_command(message : types.Message):
+	await sqlite_db.sql_read(message)
+
+
+
+	
+
 def register_handlers_admin(dp : Dispatcher):
 	dp.register_message_handler(cm_start, commands=['Загрузить'], state=None)
 	dp.register_message_handler(cancel_handler, state="*", commands = ['Отмена'])
@@ -107,3 +115,8 @@ def register_handlers_admin(dp : Dispatcher):
 	dp.register_message_handler(make_changes_command, commands=['moderator'], is_chat_admin = True)
 	dp.register_message_handler(cm_delete, commands=['Удалить'], state=None)
 	dp.register_message_handler(delete_item, state=FSMAdmin1.message_text)
+	dp.register_message_handler(pizza_menu_command, commands=['Меню'])
+
+
+
+

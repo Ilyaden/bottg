@@ -6,7 +6,7 @@ from data_base import sqlite_db
 
 #@dp.message_handler(commands=['start', 'help'])
 async def command_start(message : types.Message):
-	await bot.send_message(message.from_user.id, "Приятного аппетита", reply_markup=kb_client)
+	await bot.send_message(message.from_user.id, "Бот работает", reply_markup=kb_client)
 		
 
 
